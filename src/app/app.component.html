@@ -1,0 +1,96 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<br>
+<div style="text-align:center">
+ <h3>Angular Forms</h3>
+</div>
+<div class="alert alert-danger" *ngIf="errormsg">
+  {{errormsg}}
+</div>
+<br>
+
+<div class="container">
+<h5>Things to Note:</h5><br>
+1. If we use <b>forms </b> in Angular we need to import <B>import FormsModule  from '@angular/forms';</B><br>
+2. Then give a <b>Reference Value </b> for our Forms like <b> form #dataform="ngForm" </b><br>
+3. Then paste form elements what we want like (Name,Phone,etc..)<br>
+4. Now give <B>name ="" </B> for each element for get value from that element and also dont forget to add <b>ngModel</b> for bind the <b>Element values </b><br>
+5. We can check Angular class for the <b> Html Elements </b> by add <b> #name</b> in the html element then bind the class like interpolation <b>name.className</b><br>
+6. Here the example classes <b>ng-touched, ng-untouched, ng-pristine, ng-dirty, ng-valid, ng-invalid</b><br>
+7. <b>ng-touched </b> and <b> ng-untouched</b> used when page first time loaded <b>untouched </b> class display when we click in that element then click out side this class will change to <b> touched</b><br>
+8. <b>ng-pristine</b> and <b> ng-dirty </b> denotes if we have input box with any one value in that input element <b>pristine </b> class is display , then we change input value <b> dirty</b> will display that is we dirt the element.<br>
+9. <b>ng-valid </b>and <b> ng-invalid</b> in this class works we add <b>required </b> in our html elements, if the values is there it displays <b> valid </b> if not displays <b>invalid </b>
+ <br>
+ 10<b>#dataform="ngForm"</b> is the <b>Reference Variable</b> for denoting angular forms.<br>
+ 11.<b>novalidate</b> is preventing default form submision <br>
+ <br>
+<h3><u>Creating ExpressJS Server</u></h3><br>
+1.Make a folder in our project named it <B>Server</B><br>
+2.Then make a <b>Package.json</b> file in the SERVER directory by running command <b>npm init --yes</b><br>
+3.Now create a <b>Express server </b>by command like <b> npm install --save express body-parser cors</b><br>
+4.<b>Express </b> is the <u><b>Web server</b></u> and <b>body-parser</b> is the <b><u>Middleware</u></b> and <b>cors </b> is the <b><u>Package</u></b> for make <b>Request </b>and <b>Response</b>.<br>
+5.Create a new file name it <b>Server.js</b> for configure <b>Server port</b> and <b>Server response messages</b>.<br><br>
+
+This example of form data posted to <B>Express Server</B>
+</div>
+ <div class="container">
+    <form #dataform="ngForm" *ngIf ="!submitted" (ngSubmit)="submitForm()" novalidate>
+        <!-- display the json format
+        {{ dataform.value | json }} -->
+
+        <!-- check form valid or not by  -->
+        {{ dataform.form.valid}}
+        <div class="form-group">
+            <label>Enter Name</label>
+            <input type="text" #name="ngModel"  class="form-control" [class.is-invalid]="name.invalid && name.touched " name="name" ngModel  autocomplete="off"  [(ngModel)]="userdetails.name" required>
+            <span class="text-danger" [class.d-none]="name.valid || name.untouched">Enter your email </span>
+            <!-- display the class of elements -->
+            <!-- {{name.className}} -->
+         </div>
+         
+        <div class="form-group">
+            <label>Enter Email</label>
+            <input type="text"  #email="ngModel" class="form-control" [class.is-invalid]="email.invalid && email.touched " name="email" ngModel autocomplete="off" [(ngModel)]="userdetails.email" required>
+            <span class="text-danger" [class.d-none]="email.valid || email.untouched">Enter your email </span>
+        </div> 
+        <div class="form-group">
+            <label>Enter Phone Number</label>
+            <input type="tel" #phone="ngModel"  pattern="^\d{10}$"  class="form-control" [class.is-invalid]="phone.invalid && phone.touched" name="phone" ngModel autocomplete="off" [(ngModel)]="userdetails.phone" required>
+            <span class="text-danger" [class.d-none]="phone.valid || phone.untouched">Enter your valid number</span>
+        </div> 
+        <div class="form-group">
+                <label>Choose Course</label>
+            <select class="custom-select" (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)" #topic="ngModel" [class.is-invalid]="topicHasError && topic.touched" name="topic" [(ngModel)]="userdetails.course">
+              <option value="choose">I am interested in</option>
+              <option *ngFor="let topic of topics">{{ topic }}</option>
+            </select>
+            <span class="text-danger" [class.d-none]="!topicHasError || topic.untouched"> choose a course</span>      
+          </div>
+        <br>
+        <label>Select Time</label>
+        <div class="radio">
+            <label><input type="radio" name="optradio" ngModel checked value="day"  [(ngModel)]="userdetails.optradio"> Day Time</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="optradio" ngModel value="night" [(ngModel)]="userdetails.optradio"> Night Time</label>
+          </div>
+        <div class="form-group"> 
+              <div class="checkbox" >
+                <label><input type="checkbox" name="special" ngModel [(ngModel)]="userdetails.special">Get Special Offeres</label>
+            </div>
+          </div>
+          <div style="text-align:center" >
+            <button [disabled]="dataform.form.invalid || topicHasError "  type="submit" class="btn btn-primary">Submit</button>
+          </div>
+         
+    </form>
+    <!-- <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Outline form field</mat-label>
+        <input matInput placeholder="Placeholder">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+    </p> -->
+    <!-- <button (click)="btnclick()" type="submit" class="btn btn-primary">get</button> -->
+    </div>
+
