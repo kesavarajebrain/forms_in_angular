@@ -5,10 +5,6 @@ const path = require('path');
 const app = express();
 // server port 
 const PORT =3000;
-
-// instance
-const app = express();
-
 // handle JSON
 app.use(bodyParser.json());
 
