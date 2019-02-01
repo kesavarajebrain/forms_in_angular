@@ -8,7 +8,7 @@ import { throwError}  from 'rxjs';
   providedIn: 'root'
 })
 export class PostdataService {
- public post_url ='http://localhost:3000/postdata';
+ public post_url ='https://angular-forms-by-kesavaraj.herokuapp.com/postdata';
 // public get_url ='http://localhost:3000/postdata'
   constructor( private http:HttpClient) { }
 
