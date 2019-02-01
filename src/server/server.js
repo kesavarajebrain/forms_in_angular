@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const path = require('path');
+const app = express();
 // server port 
 const PORT =3000;
 
@@ -26,4 +27,16 @@ res.status(200).send({"message":"Data received successfully"});
 app.listen(PORT, function(){
     console.log("Server running on localhost :" + PORT)
 });
+
+
+// Serve only the static files form the dist directory
+app.use(express.static(__dirname + '/dist/angular-forms'));
+
+app.get('/*', function(req,res) {
+    
+res.sendFile(path.join(__dirname+'/dist/angular-forms/index.html'));
+});
+
+// Start the app by listening on the default Heroku port
+app.listen(process.env.PORT || 8080);
 
